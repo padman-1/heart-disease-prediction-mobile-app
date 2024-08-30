@@ -15,8 +15,9 @@ dependencies:
     sdk: flutter
   intl: ^0.18.1
   dio: ^5.6.0
+  equatable: ^2.0.5
 
-  flutter_gen: any
+  # flutter_gen: any
 dev_dependencies:
   bloc_test: ^9.1.6
   flutter_test:

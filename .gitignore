@@ -111,10 +111,3 @@ app.*.map.json
 !.idea/dictionaries/
 !.idea/runConfigurations/
 
-#recently created folders
-lib/models/
-lib/pages/
-lib/service/
-lib/widgets/
-lib/config/
-lib/bloc/
