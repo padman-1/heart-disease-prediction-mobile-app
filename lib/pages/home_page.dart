@@ -5,7 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heart_disease_mobile_app/bloc/cubit/heart_disease_cubit.dart';
 import 'package:heart_disease_mobile_app/models/heart_disease_model.dart';
 import 'package:heart_disease_mobile_app/service/api_service.dart';
+import 'package:heart_disease_mobile_app/widgets/chest_pain_dropdown.dart';
 import 'package:heart_disease_mobile_app/widgets/custom_textfield.dart';
+import 'package:heart_disease_mobile_app/widgets/gender_dropdown.dart';
+import 'package:heart_disease_mobile_app/widgets/slope_dropdown.dart';
+import 'package:heart_disease_mobile_app/widgets/thal_dropdown.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,6 +39,12 @@ class _HomePageState extends State<HomePage> {
   late int sex; // 0 for female, 1 for male
   late int bloodPressure;
   late int cholesterol;
+
+  int _selectedGender = -1;
+  int _selectedChestPain = -1;
+  int _selectedSlope = -1;
+  int _selectedThal = -1;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -114,26 +124,40 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "sex",
-                          label: Text('sex'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: sexController,
-                        );
-                      },
-                    ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "ChestPain",
-                          label: Text('ChestPain'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: chestPainController,
-                        );
-                      },
-                    ),
+                    GenderDropdown(onGenderSelected: (int genderValue) {
+                      setState(() {
+                        _selectedGender = genderValue;
+                        print(_selectedGender);
+                      });
+                    }),
+                    ChestPainDropdown(
+                        onChestPainSelected: (int chestPainValue) {
+                      setState(() {
+                        _selectedChestPain = chestPainValue;
+                        print(_selectedChestPain);
+                      });
+                    }),
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "sex",
+                    //       label: Text('sex'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: sexController,
+                    //     );
+                    //   },
+                    // ),
+
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "ChestPain",
+                    //       label: Text('ChestPain'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: chestPainController,
+                    //     );
+                    //   },
+                    // ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
@@ -204,16 +228,22 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "slope",
-                          label: Text('slope'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: slopeController,
-                        );
-                      },
-                    ),
+                    SlopeDropdown(onSlopeSelected: (int slopeValue) {
+                      setState(() {
+                        _selectedSlope = slopeValue;
+                        print(_selectedSlope);
+                      });
+                    }),
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "slope",
+                    //       label: Text('slope'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: slopeController,
+                    //     );
+                    //   },
+                    // ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
@@ -224,16 +254,22 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "thal",
-                          label: Text('thal'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: thalController,
-                        );
-                      },
-                    ),
+                    ThalDropdown(onThalSelected: (int thalValue) {
+                      setState(() {
+                        _selectedThal = thalValue;
+                        print(_selectedThal);
+                      });
+                    }),
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "thal",
+                    //       label: Text('thal'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: thalController,
+                    //     );
+                    //   },
+                    // ),
                     Builder(
                       builder: (context) {
                         final isLoading =
@@ -251,8 +287,8 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 final input = HeartDiseaseModel(
                                   age: int.parse(ageController.text),
-                                  sex: int.parse(sexController.text),
-                                  cp: int.parse(chestPainController.text),
+                                  sex: _selectedGender,
+                                  cp: _selectedChestPain,
                                   trestbps:
                                       int.parse(bloodPressureController.text),
                                   chol: int.parse(cholesterolController.text),
@@ -261,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                                   thalach: int.parse(thalachController.text),
                                   exang: int.parse(exangController.text),
                                   oldpeak: double.parse(oldpeakController.text),
-                                  slope: int.parse(slopeController.text),
+                                  slope: _selectedSlope,
                                   ca: int.parse(caController.text),
                                   thal: int.parse(thalController.text),
                                 );
