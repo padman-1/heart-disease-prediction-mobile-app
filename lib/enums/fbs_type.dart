@@ -1,0 +1,1 @@
+enum FbsType { TRUE, FALSE }
