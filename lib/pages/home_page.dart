@@ -7,6 +7,8 @@ import 'package:heart_disease_mobile_app/models/heart_disease_model.dart';
 import 'package:heart_disease_mobile_app/service/api_service.dart';
 import 'package:heart_disease_mobile_app/widgets/chest_pain_dropdown.dart';
 import 'package:heart_disease_mobile_app/widgets/custom_textfield.dart';
+import 'package:heart_disease_mobile_app/widgets/exang_dropdown.dart';
+import 'package:heart_disease_mobile_app/widgets/fbs_dropdown.dart';
 import 'package:heart_disease_mobile_app/widgets/gender_dropdown.dart';
 import 'package:heart_disease_mobile_app/widgets/slope_dropdown.dart';
 import 'package:heart_disease_mobile_app/widgets/thal_dropdown.dart';
@@ -44,6 +46,8 @@ class _HomePageState extends State<HomePage> {
   int _selectedChestPain = -1;
   int _selectedSlope = -1;
   int _selectedThal = -1;
+  int _selectedFbs = -1;
+  int _selectedExang = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Heart Disease Prediction"),
+          backgroundColor: Colors.white12,
         ),
         body: BlocListener<HeartDiseaseCubit, HeartDiseaseState>(
           // listenWhen: (previous, current) => previous.Hear,
@@ -63,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               showDialog(
                 context: context,
                 builder: (_) => BackdropFilter(
-                  filter: ImageFilter.blur(),
+                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                   child: AlertDialog(
                     title: Center(
                       child: Text('Results'),
@@ -105,20 +110,33 @@ class _HomePageState extends State<HomePage> {
           },
           child: SingleChildScrollView(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 248, 248, 240),
               ),
               child: Form(
                 key: _formKey,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Text("data"),
+                    Container(
+                      child: Image.asset(
+                        'assets/images/heart_logo.png',
+                        height: 100,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text('Wanna make a prediction today?'),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
-                          hintext: "Age",
-                          label: Text('Age'),
+                          // hintext: 'Enter Age',
+                          label: const Text('Enter Age'),
                           icon: Icon(Icons.abc_sharp),
                           controller: ageController,
                         );
@@ -137,32 +155,12 @@ class _HomePageState extends State<HomePage> {
                         print(_selectedChestPain);
                       });
                     }),
-                    // Builder(
-                    //   builder: (context) {
-                    //     return CustomTextField(
-                    //       hintext: "sex",
-                    //       label: Text('sex'),
-                    //       icon: Icon(Icons.abc_sharp),
-                    //       controller: sexController,
-                    //     );
-                    //   },
-                    // ),
 
-                    // Builder(
-                    //   builder: (context) {
-                    //     return CustomTextField(
-                    //       hintext: "ChestPain",
-                    //       label: Text('ChestPain'),
-                    //       icon: Icon(Icons.abc_sharp),
-                    //       controller: chestPainController,
-                    //     );
-                    //   },
-                    // ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
-                          hintext: "BP",
-                          label: Text('BP'),
+                          hintext: "Enter Resting blood Pressure",
+                          label: Text('Enter Resting blood Pressure'),
                           icon: Icon(Icons.abc_sharp),
                           controller: bloodPressureController,
                         );
@@ -172,22 +170,29 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) {
                         return CustomTextField(
                           hintext: "Chol",
-                          label: Text('Chol'),
+                          label: Text('Serum Cholesterol'),
                           icon: Icon(Icons.abc_sharp),
                           controller: cholesterolController,
                         );
                       },
                     ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "FBS",
-                          label: Text('FBS'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: fbsController,
-                        );
-                      },
-                    ),
+                    FbsDropdown(onFbsSelected: (FbsValue) {
+                      setState(() {
+                        _selectedFbs = FbsValue;
+                        print(_selectedFbs);
+                      });
+                    }),
+
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "FBS",
+                    //       label: Text('FBS'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: fbsController,
+                    //     );
+                    //   },
+                    // ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
@@ -208,16 +213,22 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-                    Builder(
-                      builder: (context) {
-                        return CustomTextField(
-                          hintext: "exang",
-                          label: Text('exang'),
-                          icon: Icon(Icons.abc_sharp),
-                          controller: exangController,
-                        );
-                      },
-                    ),
+                    ExangDropdown(onExangSelected: (exangValue) {
+                      setState(() {
+                        _selectedExang = exangValue;
+                        print(_selectedExang);
+                      });
+                    }),
+                    // Builder(
+                    //   builder: (context) {
+                    //     return CustomTextField(
+                    //       hintext: "exang",
+                    //       label: Text('exang'),
+                    //       icon: Icon(Icons.abc_sharp),
+                    //       controller: exangController,
+                    //     );
+                    //   },
+                    // ),
                     Builder(
                       builder: (context) {
                         return CustomTextField(
@@ -292,14 +303,14 @@ class _HomePageState extends State<HomePage> {
                                   trestbps:
                                       int.parse(bloodPressureController.text),
                                   chol: int.parse(cholesterolController.text),
-                                  fbs: int.parse(fbsController.text),
+                                  fbs: _selectedFbs,
                                   restecg: int.parse(restecgController.text),
                                   thalach: int.parse(thalachController.text),
-                                  exang: int.parse(exangController.text),
+                                  exang: _selectedExang,
                                   oldpeak: double.parse(oldpeakController.text),
                                   slope: _selectedSlope,
                                   ca: int.parse(caController.text),
-                                  thal: int.parse(thalController.text),
+                                  thal: _selectedThal,
                                 );
                                 print(input);
                                 context
