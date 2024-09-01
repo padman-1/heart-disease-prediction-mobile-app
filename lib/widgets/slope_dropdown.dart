@@ -16,7 +16,7 @@ class _SlopeDropdownState extends State<SlopeDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownButton<SlopeType>(
         hint: Text("Select Slope"),

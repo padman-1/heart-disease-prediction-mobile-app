@@ -25,6 +25,22 @@ dev_dependencies:
   mocktail: ^1.0.3
   very_good_analysis: ^5.1.0
 
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/heart_logo.png
+  color_dark: "#ffffff" # Specify white for dark mode as well
+  image_dark: assets/images/heart_logo.png
+
+  android_12:
+    image: assets/images/heart_logo.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/heart_logo.png
+    icon_background_color_dark: "#ffffff"
+
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/
+    - assets/images/front_heart.jpg

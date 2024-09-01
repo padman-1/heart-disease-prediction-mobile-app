@@ -16,10 +16,10 @@ class _ChestPainDropdownState extends State<ChestPainDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownButton<ChestPainType>(
-        hint: Text("Select ChestPain"),
+        hint: Text("Select ChestPain Type"),
         value: _selectedChestPain,
         isExpanded: true,
         borderRadius: BorderRadius.circular(15),

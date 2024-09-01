@@ -16,7 +16,7 @@ class _ThalDropdownState extends State<ThalDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownButton<ThalType>(
         hint: Text("Select Thal"),

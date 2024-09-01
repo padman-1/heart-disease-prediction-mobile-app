@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_disease_mobile_app/enums/gender.dart';
 
 class GenderDropdown extends StatefulWidget {
+  // ignore: inference_failure_on_function_return_type
   final Function(int) onGenderSelected;
 
   GenderDropdown({required this.onGenderSelected});
@@ -16,10 +17,11 @@ class _GenderDropdownState extends State<GenderDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownButton<Gender>(
         hint: Text("Select Gender"),
+        // style: TextStyle(color: Colors.black),
         value: _selectedGender,
         isExpanded: true,
         borderRadius: BorderRadius.circular(15),
