@@ -105,8 +105,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             } else if (state is HeartDiseaseFailure) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("An error occured. Couldn't make prediction")));
             }
           },
           child: SingleChildScrollView(
