@@ -19,7 +19,7 @@ class _ThalDropdownState extends State<ThalDropdown> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.only(bottom: 20),
       child: DropdownButton<ThalType>(
-        hint: Text("Select Thal"),
+        hint: Text("Select Thalassemia"),
         value: _selectedThal,
         isExpanded: true,
         borderRadius: BorderRadius.circular(15),

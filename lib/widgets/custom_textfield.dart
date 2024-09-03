@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField({
-    super.key,
-    this.hintext,
-    required this.label,
-    this.maxLines = 1,
-    this.controller,
-    this.onChanged,
-    required this.icon,
-    this.keyboardType,
-  });
+  const CustomTextField(
+      {super.key,
+      this.hintext,
+      required this.label,
+      this.maxLines = 1,
+      this.controller,
+      this.onChanged,
+      required this.icon,
+      this.keyboardType,
+      this.validator});
 
   final String? hintext;
   final int maxLines;
@@ -19,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final Widget label;
   final Widget icon;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -32,11 +33,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
         bottom: 15,
       ),
       // margin: EdgeInsets.symmetric(horizontal: 5),
-      child: TextField(
+      child: TextFormField(
         controller: widget.controller,
         maxLines: widget.maxLines,
         onChanged: widget.onChanged,
         keyboardType: TextInputType.number,
+        validator: widget.validator,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white60,
